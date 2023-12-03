@@ -148,3 +148,40 @@ public class Main {
         System.out.println("Registrasi berhasil! Silakan login.");
         run();
     }
+    /**
+     * Metode untuk menyimpan data pengguna (username dan password) ke dalam file.
+     *
+     * @param username Username pengguna yang akan disimpan.
+     * @param password Password pengguna yang akan disimpan.
+     */
+    private void saveUserData(String username, String password) {
+        try (FileWriter writer = new FileWriter(FILE_PATH, true)) {
+            writer.write(username + " " + password + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Metode untuk melakukan autentikasi pengguna berdasarkan username dan
+     * password.
+     *
+     * @param username Username yang akan diotentikasi.
+     * @param password Password yang akan diotentikasi.
+     * @return True jika autentikasi berhasil, false jika gagal.
+     */
+    private boolean authenticateUser(String username, String password) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(" ");
+                if (data.length == 2 && data[0].equals(username) && data[1].equals(password)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}
