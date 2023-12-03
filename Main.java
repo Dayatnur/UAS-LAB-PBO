@@ -79,3 +79,72 @@ public class Main {
             }
         } while (choice != 0);
     }
+     /**
+     * Metode untuk melakukan login sebagai pelanggan.
+     * Meminta username dan password, melakukan autentikasi, dan membuka menu
+     * pelanggan jika berhasil.
+     *
+     * @param listBarang Objek ListBarang untuk digunakan dalam menu pelanggan.
+     */
+    public void login(ListBarang listBarang) {
+        System.out.print("Masukkan username: ");
+        String username = scanner.nextLine();
+        System.out.print("Masukkan password: ");
+        String password = scanner.nextLine();
+
+        if (authenticateUser(username, password)) {
+            System.out.println("Login berhasil!");
+            this.listBarang = new ListBarang().createSampleListBarang();
+            TransaksiSelesai transaksiSelesai = new TransaksiSelesai();
+            AdminDriver adminDriver = new AdminDriver(listBarang, transaksiSelesai);
+            CustomerDriver customerDriver = new CustomerDriver(listBarang, new Customer(), adminDriver);
+            customerDriver.userMenu();
+        } else {
+            System.out.println("Login gagal. Username atau password salah.");
+        }
+    }
+
+    /**
+     * Metode untuk melakukan login sebagai admin.
+     * Meminta username dan password admin, melakukan autentikasi, dan membuka menu
+     * admin jika berhasil.
+     *
+     * @param listBarang Objek ListBarang untuk digunakan dalam menu admin.
+     */
+    private void loginAdmin(ListBarang listBarang) {
+        System.out.print("Masukkan username admin: ");
+        String username = scanner.nextLine();
+        System.out.print("Masukkan password admin: ");
+        String password = scanner.nextLine();
+
+        Admin admin = Admin.authenticateAdmin(username, password);
+
+        if (admin != null) {
+            System.out.println("Login admin berhasil!");
+            this.listBarang = new ListBarang().createSampleListBarang();
+            TransaksiSelesai transaksiSelesai = new TransaksiSelesai();
+            AdminDriver adminDriver = new AdminDriver(this.listBarang, transaksiSelesai);
+
+            // Memanggil adminMenu dengan memberikan objek AdminDriver dan TransaksiSelesai
+            adminDriver.adminMenu(adminDriver, transaksiSelesai);
+        } else {
+            System.out.println("Login admin gagal. Username atau password salah.");
+        }
+    }
+
+    /**
+     * Metode untuk melakukan registrasi.
+     * Meminta username dan password baru, menyimpan data pengguna, dan memberikan
+     * konfirmasi registrasi berhasil.
+     */
+    private void register() {
+        System.out.print("Masukkan username: ");
+        String username = scanner.nextLine();
+        System.out.print("Masukkan password: ");
+        String password = scanner.nextLine();
+
+        saveUserData(username, password);
+
+        System.out.println("Registrasi berhasil! Silakan login.");
+        run();
+    }
