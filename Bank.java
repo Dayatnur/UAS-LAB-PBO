@@ -12,7 +12,7 @@ public class Bank extends Pembayaran {
      *         tidak berhasil.
      */
     public boolean isPembayaranBerhasil() {
-        // Implementasi logika untuk Bank
+      
         return true; // Nilai sementara, seharusnya sesuai dengan logika implementasi yang
                      // sebenarnya.
     }
