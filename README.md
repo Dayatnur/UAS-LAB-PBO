@@ -4,7 +4,7 @@
 
 Terdiri dari : 
 
--Dinda Maharani     (22081070100
+-Dinda Maharani     (2208107010081)
 
 -Nashed Bayazid Ali (2208107010049)
 
